@@ -26,12 +26,34 @@ static void on_submit_clicked(GtkButton *button, gpointer user_data)
     LoginData *data = (LoginData *)user_data;
     const char *text = gtk_editable_get_text(GTK_EDITABLE(data->entry));
 
-    if (g_strcmp0(text, "1234") == 0) 
+    FILE *file = fopen("password.txt", "r");
+    if (file == NULL)
     {
-        show_main_view(data->app);
+        return;
+    }
+
+    char hash[256];
+    gboolean loaded = FALSE;
+
+    if (fscanf(file, "%255s", hash) == 1)
+    {
+        loaded = TRUE;
+    }
+    fclose(file);
+
+    if (!loaded) return;
+
+    char *input_hash = hash_password(text);
+
+    if (input_hash && g_strcmp0(input_hash, hash) == 0)
+    {
+        show_main_view(data->app, text);
+        
         gtk_window_destroy(GTK_WINDOW(data->window));
         g_free(data);
-    } 
+    }
+
+    g_free(input_hash);
 }
 
 void activate(AdwApplication *app, gpointer user_data)
