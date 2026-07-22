@@ -1,10 +1,37 @@
-#include "login.h"
+#include <stdio.h>
 
-int main(int argc, char *argv[])
+#include "add.h"
+#include "data.h"
+#include "login.h"
+#include "save.h"
+
+int main()
 {
-    AdwApplication *app = adw_application_new("com.example.PinPadApp", G_APPLICATION_DEFAULT_FLAGS);
-    g_signal_connect(app, "activate", G_CALLBACK(activate), NULL);
-    int status = g_application_run(G_APPLICATION(app), argc, argv);
-    g_object_unref(app);
-    return status;
+
+	int action = login();
+
+	if ( action == 1 )
+	{
+		int c;
+		while ((c = getchar()) != '\n' && c != EOF);
+		add();		
+		save_data();
+	}
+	else if	( action == 2 )
+	{
+		printf("random");
+	}
+	else if ( action == 3 )
+	{
+		printf("change password");
+	}
+	else if ( action == 4 )
+	{
+		printf("compare");
+	}
+	else if ( action == 5 )
+	{
+		printf("save");
+	}
 }
+
