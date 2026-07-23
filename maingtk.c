@@ -3,7 +3,7 @@
 
 #include "maingtk.h"
 
-GtkWidget *create_main_page(GCallback main_random, GCallback main_add, GCallback main_password, gpointer user_data)
+GtkWidget *create_main_page(GCallback main_random, GCallback main_add, GCallback main_password, GCallback main_compare, gpointer user_data)
 {
     GtkWidget *box;
     GtkWidget *bottom_box_upper;
@@ -121,13 +121,13 @@ GtkWidget *create_main_page(GCallback main_random, GCallback main_add, GCallback
         compare_button,
         200,
         60
-    );/*
+    );
 	g_signal_connect(
 		compare_button,
 		"clicked",
-		next_callback,
+		main_compare,
 		user_data
-	);*/
+	);
 
     password_button = gtk_button_new_with_label("Change password");
     gtk_widget_set_halign(
