@@ -1,6 +1,9 @@
 #ifndef DATA_H
 #define DATA_H
 
+#include <gtk/gtk.h>
+#include <adwaita.h>
+
 typedef struct
 {
     char key[32];
@@ -11,6 +14,6 @@ extern int data_index;
 extern Dictionary data[128];
 extern char* main_password;
 
-void list_data();
+void list_data(GtkWidget *scroll_box, int readonly_mode);
 
 #endif

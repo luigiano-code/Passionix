@@ -2,6 +2,7 @@
 #include <adwaita.h>
 
 #include "maingtk.h"
+#include "data.h"
 
 GtkWidget *create_main_page(GCallback main_random, GCallback main_add, GCallback main_password, GCallback main_compare, gpointer user_data)
 {
@@ -26,16 +27,16 @@ GtkWidget *create_main_page(GCallback main_random, GCallback main_add, GCallback
 
     scroll_box = gtk_box_new(
         GTK_ORIENTATION_VERTICAL,
-        0
+        20
     );
 	gtk_widget_set_vexpand(
         scroll_box,
         TRUE
-    );
+    );/*
     gtk_widget_set_halign(
         scroll_box,
         GTK_ALIGN_CENTER
-    );
+    );*/
     gtk_widget_set_valign(
         scroll_box,
         GTK_ALIGN_CENTER
@@ -145,6 +146,8 @@ GtkWidget *create_main_page(GCallback main_random, GCallback main_add, GCallback
 		main_password,
 		user_data
 	);
+
+	list_data(scroll_box, 0);
 
     gtk_box_append(
         GTK_BOX(bottom_box_upper),

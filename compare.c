@@ -5,10 +5,10 @@
 
 void compare()
 {
-	load_data("old.json");
+//	load_data("old.json");
 	printf("--- Old data ---\n");
-	list_data();
-	load_data("data.json");
+//	list_data();
+//	load_data("data.json");
 	printf("--- Current data ---\n");
-	list_data();
+//	list_data();
 }

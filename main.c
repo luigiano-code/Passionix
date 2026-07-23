@@ -224,12 +224,14 @@ static void login_next(
 
 int main(int argc, char **argv)
 {
+	load_data("data.json");
+
     GtkApplication *app;
     int status;
 
     app = GTK_APPLICATION(
         adw_application_new(
-            "com.passionix.app",
+            "github.luigiano-code.Passionix",
             G_APPLICATION_DEFAULT_FLAGS
         )
     );

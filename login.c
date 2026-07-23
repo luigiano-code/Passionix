@@ -18,8 +18,8 @@ int login()
 	printf("\n---\n");
 	if (check_login( main_password ))
 	{
-		load_data("data.json");
-		list_data();
+//		load_data("data.json");
+//		list_data();
 		printf("options:\n1. Add new\n2. Random\n3. Password\n4. Compare\n");
 		printf("select: ");
 		int choice = get_choice();
