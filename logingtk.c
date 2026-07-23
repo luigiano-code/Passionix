@@ -3,50 +3,13 @@
 
 #include "logingtk.h"
 
-void create_login_window(GtkApplication *app, gpointer user_data)
+GtkWidget *create_login_page(GtkStack *stack)
 {
-    AdwApplicationWindow *window;
-    AdwHeaderBar *header;
-
-    GtkWidget *toolbar_view;
     GtkWidget *box;
     GtkWidget *center_box;
     GtkWidget *password_entry;
     GtkWidget *next_button;
     GtkWidget *greeter;
-
-
-    window = ADW_APPLICATION_WINDOW(
-        adw_application_window_new(app)
-    );
-
-
-    gtk_window_set_title(
-        GTK_WINDOW(window),
-        "Passionix"
-    );
-    gtk_window_set_default_size(
-        GTK_WINDOW(window),
-        600,
-        400
-    );
-
-
-    header = ADW_HEADER_BAR(
-        adw_header_bar_new()
-    );
-    adw_header_bar_set_title_widget(
-        header,
-        gtk_label_new("Passionix")
-    );
-
-
-    toolbar_view = adw_toolbar_view_new();
-    adw_toolbar_view_add_top_bar(
-        ADW_TOOLBAR_VIEW(toolbar_view),
-        GTK_WIDGET(header)
-    );
-
 
     box = gtk_box_new(
         GTK_ORIENTATION_VERTICAL,
@@ -57,7 +20,6 @@ void create_login_window(GtkApplication *app, gpointer user_data)
         TRUE
     );
 
-
     center_box = gtk_box_new(
         GTK_ORIENTATION_VERTICAL,
         0
@@ -66,27 +28,24 @@ void create_login_window(GtkApplication *app, gpointer user_data)
         center_box,
         TRUE
     );
-	gtk_widget_set_halign(
-		center_box,
-		GTK_ALIGN_CENTER
-	);
-	gtk_widget_set_valign(
-		center_box,
-		GTK_ALIGN_CENTER
-	);
-
-
-	greeter = gtk_label_new("Type your password");
-	gtk_widget_set_halign(
-	    greeter,
+    gtk_widget_set_halign(
+        center_box,
         GTK_ALIGN_CENTER
     );
-	gtk_widget_add_css_class(
-		greeter,
-		"title-1"
-	);
-	gtk_widget_set_margin_top(greeter, 50);
-	gtk_widget_set_margin_bottom(greeter, 10);
+    gtk_widget_set_valign(
+        center_box,
+        GTK_ALIGN_CENTER
+    );
+
+    greeter = gtk_label_new("Type your password");
+    gtk_widget_set_halign(
+        greeter,
+        GTK_ALIGN_CENTER
+    );
+    gtk_widget_add_css_class(
+        greeter,
+        "title-1"
+    );
 
 
     password_entry = gtk_password_entry_new();
@@ -94,17 +53,13 @@ void create_login_window(GtkApplication *app, gpointer user_data)
         password_entry,
         GTK_ALIGN_CENTER
     );
-	gtk_widget_set_valign(
-        password_entry,
-        GTK_ALIGN_CENTER
-    );
-	gtk_widget_set_size_request(
+    gtk_widget_set_size_request(
         password_entry,
         200,
         30
     );
-	gtk_widget_set_margin_top(password_entry, 10);
-	gtk_widget_set_margin_bottom(password_entry, 10);
+	gtk_widget_set_margin_bottom(password_entry, 50);
+	gtk_widget_set_margin_top(password_entry, 50);
 
 
     next_button = gtk_button_new_with_label("Next");
@@ -120,15 +75,16 @@ void create_login_window(GtkApplication *app, gpointer user_data)
     gtk_widget_add_css_class(
         next_button,
         "suggested-action"
-    );
-    gtk_widget_set_margin_bottom(
+    );/*
+    g_signal_connect(
         next_button,
-        30
-    );
-
+        "clicked",
+        G_CALLBACK(next_clicked),
+        stack
+    );*/
 
     gtk_box_append(
-        GTK_BOX(box),
+        GTK_BOX(center_box),
         greeter
     );
 
@@ -138,28 +94,14 @@ void create_login_window(GtkApplication *app, gpointer user_data)
     );
 
     gtk_box_append(
-        GTK_BOX(box),
-        center_box
+        GTK_BOX(center_box),
+        next_button
     );
 
     gtk_box_append(
         GTK_BOX(box),
-        next_button
+        center_box
     );
 
-    adw_toolbar_view_set_content(
-        ADW_TOOLBAR_VIEW(toolbar_view),
-        box
-    );
-
-
-    adw_application_window_set_content(
-        window,
-        toolbar_view
-    );
-
-
-    gtk_window_present(
-        GTK_WINDOW(window)
-    );
+    return box;
 }

@@ -15,9 +15,79 @@
 #include "save.h"
 #include "compare.h"
 
+
 static void activate(GtkApplication *app, gpointer user_data)
 {
-    create_login_window(app, user_data);
+    AdwApplicationWindow *window;
+    AdwHeaderBar *header;
+    GtkWidget *toolbar_view;
+    GtkWidget *stack;
+
+    GtkWidget *login_page;
+    GtkWidget *vault_page;
+
+    window = ADW_APPLICATION_WINDOW(
+        adw_application_window_new(app)
+    );
+
+    gtk_window_set_title(
+        GTK_WINDOW(window),
+        "Passionix"
+    );
+
+    gtk_window_set_default_size(
+        GTK_WINDOW(window),
+        600,
+        400
+    );
+
+
+    header = ADW_HEADER_BAR(
+        adw_header_bar_new()
+    );
+    adw_header_bar_set_title_widget(
+        header,
+        gtk_label_new("Passionix")
+    );
+
+
+    toolbar_view = adw_toolbar_view_new();
+    adw_toolbar_view_add_top_bar(
+        ADW_TOOLBAR_VIEW(toolbar_view),
+        GTK_WIDGET(header)
+    );
+
+
+    stack = gtk_stack_new();
+
+    login_page = create_login_page(
+        GTK_STACK(stack)
+    );
+
+    gtk_stack_add_named(
+        GTK_STACK(stack),
+        login_page,
+        "login"
+    );
+    gtk_stack_set_visible_child_name(
+        GTK_STACK(stack),
+        "login"
+    );
+
+
+    adw_toolbar_view_set_content(
+        ADW_TOOLBAR_VIEW(toolbar_view),
+        stack
+    );
+
+    adw_application_window_set_content(
+        window,
+        toolbar_view
+    );
+
+    gtk_window_present(
+        GTK_WINDOW(window)
+    );
 }
 
 int main(int argc, char **argv)
@@ -27,7 +97,7 @@ int main(int argc, char **argv)
 
     app = GTK_APPLICATION(
         adw_application_new(
-            "com.passionix.App",
+            "com.passionix.app",
             G_APPLICATION_DEFAULT_FLAGS
         )
     );
@@ -49,6 +119,7 @@ int main(int argc, char **argv)
 
     return status;
 }
+
 
 /*
 int main()
