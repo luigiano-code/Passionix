@@ -3,6 +3,7 @@
 #include <adwaita.h>
 
 #include "data.h"
+#include "user.h"
 
 int data_index = 0;
 Dictionary data[128];
@@ -10,7 +11,6 @@ char* main_password;
 
 void list_data(GtkWidget *scroll_box, int readonly_mode)
 {
-	printf("works");
     for (int i = 0; i < data_index; i++)
     {
         GtkWidget *box = gtk_box_new(
@@ -44,18 +44,36 @@ void list_data(GtkWidget *scroll_box, int readonly_mode)
                 edit_button,
                 GTK_ALIGN_CENTER
             );
+			g_signal_connect(
+				edit_button,
+				"clicked",
+				G_CALLBACK(edit_clicked),
+				GINT_TO_POINTER(i)
+			);
 
             GtkWidget *copy_button = gtk_button_new_with_label("Copy");
             gtk_widget_set_halign(
                 copy_button,
                 GTK_ALIGN_CENTER
             );
+			g_signal_connect(
+				copy_button,
+				"clicked",
+				G_CALLBACK(copy_clicked),
+				GINT_TO_POINTER(i)
+			);
 
             GtkWidget *delete_button = gtk_button_new_with_label("Delete");
             gtk_widget_set_halign(
                 delete_button,
                 GTK_ALIGN_CENTER
             );
+			g_signal_connect(
+				delete_button,
+				"clicked",
+				G_CALLBACK(delete_clicked),
+				GINT_TO_POINTER(i)
+			);
 
 			gtk_widget_set_margin_start(box, 20);
 			gtk_widget_set_margin_end(box, 20);

@@ -8,7 +8,7 @@ GtkWidget *create_compare_page(GCallback login_next, gpointer user_data)
     GtkWidget *box;
 	GtkWidget *bottom_box_lower;
 	GtkWidget *done_button;
-	GtkWidget *scroll_box;
+	GtkWidget *compare_scroll_box;
 	GtkWidget *scroll;
 
     box = gtk_box_new(
@@ -20,20 +20,20 @@ GtkWidget *create_compare_page(GCallback login_next, gpointer user_data)
         TRUE
     );
 
-    scroll_box = gtk_box_new(
+    compare_scroll_box = gtk_box_new(
         GTK_ORIENTATION_VERTICAL,
         0
     );
 	gtk_widget_set_vexpand(
-        scroll_box,
+        compare_scroll_box,
         TRUE
     );
     gtk_widget_set_halign(
-        scroll_box,
+        compare_scroll_box,
         GTK_ALIGN_CENTER
     );
     gtk_widget_set_valign(
-        scroll_box,
+        compare_scroll_box,
         GTK_ALIGN_CENTER
     );
 
@@ -54,7 +54,7 @@ GtkWidget *create_compare_page(GCallback login_next, gpointer user_data)
 	scroll = gtk_scrolled_window_new();	
 	gtk_scrolled_window_set_child(
 		GTK_SCROLLED_WINDOW(scroll),
-		scroll_box
+		compare_scroll_box
 	);	
 
     done_button = gtk_button_new_with_label("Done");

@@ -4,13 +4,14 @@
 #include "maingtk.h"
 #include "data.h"
 
+GtkWidget *main_scroll_box = NULL;
+
 GtkWidget *create_main_page(GCallback main_random, GCallback main_add, GCallback main_password, GCallback main_compare, gpointer user_data)
 {
     GtkWidget *box;
     GtkWidget *bottom_box_upper;
 	GtkWidget *bottom_box_lower;
 	GtkWidget *add_button;
-	GtkWidget *scroll_box;
 	GtkWidget *password_button;
     GtkWidget *random_button;
     GtkWidget *compare_button;
@@ -25,20 +26,17 @@ GtkWidget *create_main_page(GCallback main_random, GCallback main_add, GCallback
         TRUE
     );
 
-    scroll_box = gtk_box_new(
+    main_scroll_box = gtk_box_new(
         GTK_ORIENTATION_VERTICAL,
         20
     );
 	gtk_widget_set_vexpand(
-        scroll_box,
+        main_scroll_box,
         TRUE
-    );/*
-    gtk_widget_set_halign(
-        scroll_box,
-        GTK_ALIGN_CENTER
-    );*/
+    );
+    
     gtk_widget_set_valign(
-        scroll_box,
+        main_scroll_box,
         GTK_ALIGN_CENTER
     );
 
@@ -72,7 +70,7 @@ GtkWidget *create_main_page(GCallback main_random, GCallback main_add, GCallback
 	scroll = gtk_scrolled_window_new();	
 	gtk_scrolled_window_set_child(
 		GTK_SCROLLED_WINDOW(scroll),
-		scroll_box
+		main_scroll_box
 	);	
 
     add_button = gtk_button_new_with_label("Add");
@@ -147,7 +145,7 @@ GtkWidget *create_main_page(GCallback main_random, GCallback main_add, GCallback
 		user_data
 	);
 
-	list_data(scroll_box, 0);
+	list_data(main_scroll_box, 0);
 
     gtk_box_append(
         GTK_BOX(bottom_box_upper),

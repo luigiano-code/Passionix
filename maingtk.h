@@ -9,4 +9,6 @@ GtkWidget *create_main_page(
     gpointer user_data
 );
 
+extern GtkWidget *main_scroll_box;
+
 #endif
