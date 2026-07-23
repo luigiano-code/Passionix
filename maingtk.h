@@ -1,7 +1,7 @@
-#ifndef LOGINGTK
-#define LOGINGTK
+#ifndef MAINGTK
+#define MAINGTK
 
-GtkWidget *create_login_page(
+GtkWidget *create_main_page(
     GCallback next_callback,
     gpointer user_data
 );

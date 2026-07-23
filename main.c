@@ -5,6 +5,7 @@
 #include <adwaita.h>
 
 #include "logingtk.h"
+#include "maingtk.h"
 
 #include "password.h"
 #include "add.h"
@@ -16,6 +17,8 @@
 #include "compare.h"
 
 
+static void login_next(GtkButton *button, gpointer user_data);
+
 static void activate(GtkApplication *app, gpointer user_data)
 {
     AdwApplicationWindow *window;
@@ -24,7 +27,7 @@ static void activate(GtkApplication *app, gpointer user_data)
     GtkWidget *stack;
 
     GtkWidget *login_page;
-    GtkWidget *vault_page;
+    GtkWidget *main_page;
 
     window = ADW_APPLICATION_WINDOW(
         adw_application_window_new(app)
@@ -60,10 +63,10 @@ static void activate(GtkApplication *app, gpointer user_data)
 
     stack = gtk_stack_new();
 
-    login_page = create_login_page(
-        GTK_STACK(stack)
-    );
-
+	login_page = create_login_page(
+		G_CALLBACK(login_next),
+		stack
+	);
     gtk_stack_add_named(
         GTK_STACK(stack),
         login_page,
@@ -74,6 +77,15 @@ static void activate(GtkApplication *app, gpointer user_data)
         "login"
     );
 
+	main_page = create_main_page(
+		G_CALLBACK(login_next),
+		stack
+	);
+    gtk_stack_add_named(
+        GTK_STACK(stack),
+        main_page,
+        "main"
+    );
 
     adw_toolbar_view_set_content(
         ADW_TOOLBAR_VIEW(toolbar_view),
@@ -87,6 +99,19 @@ static void activate(GtkApplication *app, gpointer user_data)
 
     gtk_window_present(
         GTK_WINDOW(window)
+    );
+}
+
+static void login_next(
+    GtkButton *button,
+    gpointer user_data
+)
+{
+    GtkStack *stack = GTK_STACK(user_data);
+
+    gtk_stack_set_visible_child_name(
+        stack,
+        "main"
     );
 }
 

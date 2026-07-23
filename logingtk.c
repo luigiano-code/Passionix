@@ -3,7 +3,7 @@
 
 #include "logingtk.h"
 
-GtkWidget *create_login_page(GtkStack *stack)
+GtkWidget *create_login_page(GCallback next_callback, gpointer user_data)
 {
     GtkWidget *box;
     GtkWidget *center_box;
@@ -75,13 +75,13 @@ GtkWidget *create_login_page(GtkStack *stack)
     gtk_widget_add_css_class(
         next_button,
         "suggested-action"
-    );/*
-    g_signal_connect(
-        next_button,
-        "clicked",
-        G_CALLBACK(next_clicked),
-        stack
-    );*/
+    );
+	g_signal_connect(
+		next_button,
+		"clicked",
+		next_callback,
+		user_data
+	);
 
     gtk_box_append(
         GTK_BOX(center_box),
