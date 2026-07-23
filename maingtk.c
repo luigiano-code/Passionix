@@ -3,7 +3,7 @@
 
 #include "maingtk.h"
 
-GtkWidget *create_main_page(GCallback main_random, gpointer user_data)
+GtkWidget *create_main_page(GCallback main_random,GCallback main_add, gpointer user_data)
 {
     GtkWidget *box;
     GtkWidget *bottom_box_upper;
@@ -87,13 +87,13 @@ GtkWidget *create_main_page(GCallback main_random, gpointer user_data)
     gtk_widget_add_css_class(
         add_button,
         "suggested-action"
-    );/*
+    );
 	g_signal_connect(
 		add_button,
 		"clicked",
-		next_callback,
+		main_add,
 		user_data
-	);*/
+	);
 
     random_button = gtk_button_new_with_label("Generate passwords");
     gtk_widget_set_halign(
