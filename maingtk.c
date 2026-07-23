@@ -3,7 +3,7 @@
 
 #include "maingtk.h"
 
-GtkWidget *create_main_page(GCallback next_callback, gpointer user_data)
+GtkWidget *create_main_page(GCallback main_random, gpointer user_data)
 {
     GtkWidget *box;
     GtkWidget *bottom_box_upper;
@@ -67,7 +67,6 @@ GtkWidget *create_main_page(GCallback next_callback, gpointer user_data)
         GTK_ALIGN_CENTER
     );
 
-
 	
 	scroll = gtk_scrolled_window_new();	
 	gtk_scrolled_window_set_child(
@@ -88,13 +87,13 @@ GtkWidget *create_main_page(GCallback next_callback, gpointer user_data)
     gtk_widget_add_css_class(
         add_button,
         "suggested-action"
-    );
+    );/*
 	g_signal_connect(
 		add_button,
 		"clicked",
 		next_callback,
 		user_data
-	);
+	);*/
 
     random_button = gtk_button_new_with_label("Generate passwords");
     gtk_widget_set_halign(
@@ -109,7 +108,7 @@ GtkWidget *create_main_page(GCallback next_callback, gpointer user_data)
 	g_signal_connect(
 		random_button,
 		"clicked",
-		next_callback,
+		main_random,
 		user_data
 	);
 
@@ -122,13 +121,13 @@ GtkWidget *create_main_page(GCallback next_callback, gpointer user_data)
         compare_button,
         200,
         60
-    );
+    );/*
 	g_signal_connect(
 		compare_button,
 		"clicked",
 		next_callback,
 		user_data
-	);
+	);*/
 
     password_button = gtk_button_new_with_label("Change password");
     gtk_widget_set_halign(
@@ -139,13 +138,13 @@ GtkWidget *create_main_page(GCallback next_callback, gpointer user_data)
         password_button,
         200,
         60
-    );
+    );/*
 	g_signal_connect(
 		password_button,
 		"clicked",
 		next_callback,
 		user_data
-	);
+	);*/
 
     gtk_box_append(
         GTK_BOX(bottom_box_upper),
