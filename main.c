@@ -8,6 +8,7 @@
 #include "maingtk.h"
 #include "randomgtk.h"
 #include "addgtk.h"
+#include "passwordgtk.h"
 
 #include "password.h"
 #include "add.h"
@@ -18,7 +19,7 @@
 #include "save.h"
 #include "compare.h"
 
-
+static void main_password_page(GtkButton *button, gpointer user_data);
 static void main_add(GtkButton *button, gpointer user_data);
 static void main_random(GtkButton *button, gpointer user_data);
 static void login_next(GtkButton *button, gpointer user_data);
@@ -34,6 +35,7 @@ static void activate(GtkApplication *app, gpointer user_data)
     GtkWidget *main_page;
     GtkWidget *random_page;
     GtkWidget *add_page;
+    GtkWidget *password_page;
 
     window = ADW_APPLICATION_WINDOW(
         adw_application_window_new(app)
@@ -86,6 +88,7 @@ static void activate(GtkApplication *app, gpointer user_data)
 	main_page = create_main_page(
 		G_CALLBACK(main_random),
 		G_CALLBACK(main_add),
+		G_CALLBACK(main_password_page),
 		stack
 	);
     gtk_stack_add_named(
@@ -114,6 +117,16 @@ static void activate(GtkApplication *app, gpointer user_data)
         "add"
     );
 
+	password_page = create_add_page(
+		G_CALLBACK(main_password_page),
+		stack
+	);
+    gtk_stack_add_named(
+        GTK_STACK(stack),
+        password_page,
+        "password"
+    );
+
     adw_toolbar_view_set_content(
         ADW_TOOLBAR_VIEW(toolbar_view),
         stack
@@ -128,6 +141,20 @@ static void activate(GtkApplication *app, gpointer user_data)
         GTK_WINDOW(window)
     );
 }
+
+static void main_password_page(
+    GtkButton *button,
+    gpointer user_data
+)
+{
+    GtkStack *stack = GTK_STACK(user_data);
+
+    gtk_stack_set_visible_child_name(
+        stack,
+        "password"
+    );
+}
+
 static void main_random(
     GtkButton *button,
     gpointer user_data
