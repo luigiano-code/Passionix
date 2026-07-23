@@ -1,6 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <gtk/gtk.h>
+#include <adwaita.h>
+
+#include "logingtk.h"
 
 #include "password.h"
 #include "add.h"
@@ -11,6 +15,42 @@
 #include "save.h"
 #include "compare.h"
 
+static void activate(GtkApplication *app, gpointer user_data)
+{
+    create_login_window(app, user_data);
+}
+
+int main(int argc, char **argv)
+{
+    GtkApplication *app;
+    int status;
+
+    app = GTK_APPLICATION(
+        adw_application_new(
+            "com.passionix.App",
+            G_APPLICATION_DEFAULT_FLAGS
+        )
+    );
+
+    g_signal_connect(
+        app,
+        "activate",
+        G_CALLBACK(activate),
+        NULL
+    );
+
+    status = g_application_run(
+        G_APPLICATION(app),
+        argc,
+        argv
+    );
+
+    g_object_unref(app);
+
+    return status;
+}
+
+/*
 int main()
 {
 
@@ -46,4 +86,4 @@ int main()
 		printf("save");
 	}
 }
-
+*/

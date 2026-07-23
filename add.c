@@ -2,14 +2,11 @@
 #include <string.h>
 
 #include "data.h"
-#include "password.h"
 
 void add()
 {
     char scanned_word[32];
 			
-	load_password();
-
     printf("Enter username: ");
 
     if (fgets(scanned_word, sizeof(scanned_word), stdin) == NULL)
