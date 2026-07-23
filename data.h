@@ -9,6 +9,7 @@ typedef struct
 
 extern int data_index;
 extern Dictionary data[128];
+extern char* main_password;
 
 void list_data();
 

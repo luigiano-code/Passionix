@@ -4,6 +4,7 @@
 
 int data_index = 0;
 Dictionary data[128];
+char* main_password;
 
 void list_data()
 {
@@ -12,5 +13,6 @@ void list_data()
 		printf(data[i].key);
 		printf(" | ");
 		printf(data[i].value);
+		printf("\n");
 	}
 }
