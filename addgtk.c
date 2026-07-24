@@ -3,7 +3,7 @@
 
 #include "addgtk.h"
 
-GtkWidget *create_add_page(GCallback next_callback, gpointer user_data)
+GtkWidget *create_add_page(GCallback add_callback, gpointer user_data)
 {
     GtkWidget *box;
     GtkWidget *center_box;
@@ -75,6 +75,10 @@ GtkWidget *create_add_page(GCallback next_callback, gpointer user_data)
 	gtk_widget_set_margin_bottom(password_entry, 50);
 	gtk_widget_set_margin_top(username_entry, 10);
 
+	AddContext *ctx = malloc(sizeof(AddContext));
+
+	ctx->entry = username_entry;
+	ctx->password_entry = password_entry;
 
     add_button = gtk_button_new_with_label("Add");
     gtk_widget_set_halign(
@@ -89,13 +93,13 @@ GtkWidget *create_add_page(GCallback next_callback, gpointer user_data)
     gtk_widget_add_css_class(
         add_button,
         "suggested-action"
-    );/*
+    );
 	g_signal_connect(
 		add_button,
 		"clicked",
-		next_callback,
-		user_data
-	);*/
+		add_callback,
+		ctx
+	);
 
     gtk_box_append(
         GTK_BOX(center_box),

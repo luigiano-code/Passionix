@@ -6,4 +6,12 @@ GtkWidget *create_add_page(
     gpointer user_data
 );
 
+typedef struct
+{
+    GtkWidget *entry;
+    GtkWidget *password_entry;
+	char *username;
+	char *password;
+} AddContext;
+
 #endif

@@ -19,7 +19,11 @@
 #include "login.h"
 #include "save.h"
 #include "compare.h"
+#include "user.h"
 
+GtkWidget *stack = NULL;
+
+static void add_callback(GtkButton *button, gpointer user_data);
 static void main_compare(GtkButton *button, gpointer user_data);
 static void main_password_page(GtkButton *button, gpointer user_data);
 static void main_add(GtkButton *button, gpointer user_data);
@@ -31,14 +35,15 @@ static void activate(GtkApplication *app, gpointer user_data)
     AdwApplicationWindow *window;
     AdwHeaderBar *header;
     GtkWidget *toolbar_view;
-    GtkWidget *stack;
-
+//    GtkWidget *stack;
     GtkWidget *login_page;
     GtkWidget *main_page;
     GtkWidget *random_page;
     GtkWidget *add_page;
     GtkWidget *password_page;
     GtkWidget *compare_page;
+
+	stack = gtk_stack_new();
 
     window = ADW_APPLICATION_WINDOW(
         adw_application_window_new(app)
@@ -71,8 +76,6 @@ static void activate(GtkApplication *app, gpointer user_data)
         GTK_WIDGET(header)
     );
 
-
-    stack = gtk_stack_new();
 
 	login_page = create_login_page(
 		G_CALLBACK(login_next),
@@ -112,7 +115,7 @@ static void activate(GtkApplication *app, gpointer user_data)
     );
 
 	add_page = create_add_page(
-		G_CALLBACK(main_add),
+		G_CALLBACK(add_callback),
 		stack
 	);
     gtk_stack_add_named(
@@ -156,6 +159,28 @@ static void activate(GtkApplication *app, gpointer user_data)
     );
 }
 
+
+static void add_callback(
+    GtkButton *button,
+    gpointer user_data
+)
+{
+	AddContext *ctx = user_data;
+
+	char *username = g_strdup(gtk_editable_get_text(GTK_EDITABLE(ctx->entry)));
+	char *password = g_strdup(gtk_editable_get_text(GTK_EDITABLE(ctx->password_entry)));
+
+	add(username, password);
+		
+	save_data("data.json");
+	refresh_list();
+
+    gtk_stack_set_visible_child_name(
+		GTK_STACK(stack),
+        "main"
+    );
+}
+
 static void main_compare(
     GtkButton *button,
     gpointer user_data
@@ -168,7 +193,6 @@ static void main_compare(
         "compare"
     );
 }
-
 
 static void main_password_page(
     GtkButton *button,
